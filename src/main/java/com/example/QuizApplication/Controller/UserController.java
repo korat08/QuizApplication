@@ -5,10 +5,7 @@ import com.example.QuizApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
@@ -17,9 +14,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("create-user")
-    public ResponseEntity<String> createUser(@RequestBody User user){
-        return userService.createUser(user);
+    @PostMapping("create-user/{userName}")
+    public ResponseEntity<String> createUser(@PathVariable String userName){
+        return userService.createUser(userName);
     }
 
 }

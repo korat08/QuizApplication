@@ -14,7 +14,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public ResponseEntity<String> createUser(User user) {
+    public ResponseEntity<String> createUser(String userName) {
+        User user = new User();
+        user.setUserName(userName);
         userRepository.save(user);
         return new ResponseEntity<>("Successfully enter..", HttpStatus.CREATED);
     }

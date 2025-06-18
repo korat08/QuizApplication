@@ -1,11 +1,13 @@
 package com.example.QuizApplication.Controller;
 
-import com.example.QuizApplication.DTO.QuizStartResponseDTO;
-import com.example.QuizApplication.DTO.QuizSubmitDTO;
+import com.example.QuizApplication.CustomResponse.AnswerResponse;
+import com.example.QuizApplication.CustomResponse.QuestionResponse;
+import com.example.QuizApplication.DTO.AnswerDTO;
+import com.example.QuizApplication.DTO.QuestionDTO;
+import com.example.QuizApplication.DTO.QuizResultDTO;
 import com.example.QuizApplication.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,10 +22,20 @@ public class QuizController {
         return quizService.startQuiz(userName);
     }
 
-    @PostMapping("submit")
-//    public ResponseEntity<String> submitQuiz(@RequestBody QuizSubmitDTO quizSubmitDTO){
-//        return quizService.submitQuiz(quizSubmitDTO);
-//    }
+    @GetMapping("{quizId}/get-question")
+    public ResponseEntity<QuestionResponse<QuestionDTO>> getQuestion(@PathVariable Integer quizId){
+        return quizService.getQuestion(quizId);
+    }
+
+    @PostMapping("{quizId}/submitAnswer")
+    public ResponseEntity<AnswerResponse> submitAnswer(@PathVariable Integer quizId , @RequestBody AnswerDTO answerDTO){
+        return quizService.submitAnswer(quizId,answerDTO);
+    }
+
+    @GetMapping("{quizId}/get-result")
+    public ResponseEntity<QuestionResponse<QuizResultDTO>> getQuizResult(@PathVariable Integer quizId){
+        return quizService.getQuizResult(quizId);
+    }
 
     @GetMapping("getQuiz/{quizId}")
     public ResponseEntity<?> getQuizSet(@PathVariable Integer quizId){

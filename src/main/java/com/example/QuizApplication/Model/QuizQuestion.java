@@ -2,9 +2,7 @@ package com.example.QuizApplication.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.springframework.data.web.JsonPath;
 
 @Entity
 public class QuizQuestion {
@@ -25,6 +23,8 @@ public class QuizQuestion {
 
 
     private String userAnswer;
+
+    private Boolean isCorrect;
 
     public QuizQuestion() {
     }
@@ -67,5 +67,11 @@ public class QuizQuestion {
         this.userAnswer = userAnswer;
     }
 
+    public Boolean getIsCorrect() {
+        return isCorrect;
+    }
 
+    public void setIsCorrect(Boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
 }

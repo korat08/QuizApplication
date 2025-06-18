@@ -1,6 +1,7 @@
 package com.example.QuizApplication.DTO;
 
 public class QuestionDTO {
+    private Integer userId;
     private Integer id;
     private String title;
     private String optionA;
@@ -8,8 +9,19 @@ public class QuestionDTO {
     private String optionC;
     private String optionD;
 
+    public Integer getUserId() {
+        return userId;
+    }
 
-    public QuestionDTO(Integer id, String title, String optionA, String optionB, String optionC, String optionD) {
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public QuestionDTO() {
+    }
+
+    public QuestionDTO(Integer userId,Integer id, String title, String optionA, String optionB, String optionC, String optionD) {
+        this.userId = userId;
         this.id = id;
         this.title = title;
         this.optionA = optionA;

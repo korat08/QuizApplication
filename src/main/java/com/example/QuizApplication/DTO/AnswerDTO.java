@@ -1,6 +1,7 @@
 package com.example.QuizApplication.DTO;
 
 public class AnswerDTO {
+
     private Integer questionId;
     private String userAnswer;
 

@@ -4,9 +4,8 @@ package com.example.QuizApplication.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +21,11 @@ public class Quiz {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
-    private List<QuizQuestion> questionList;
+    private List<QuizQuestion> questionList = new ArrayList<>();
+
+    private int currentQuestionIndex = 0;
 
     public Quiz() {
     }
@@ -56,5 +57,13 @@ public class Quiz {
 
     public void setQuestionList(List<QuizQuestion> questionList) {
         this.questionList = questionList;
+    }
+
+    public int getCurrentQuestionIndex() {
+        return currentQuestionIndex;
+    }
+
+    public void setCurrentQuestionIndex(int currentQuestionIndex) {
+        this.currentQuestionIndex = currentQuestionIndex;
     }
 }

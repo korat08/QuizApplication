@@ -13,4 +13,7 @@ public interface QuestionRepository extends JpaRepository<Question,Integer> {
 
     @Query(value = "select * from question_table order by rand() limit ?1",nativeQuery = true)
     List<Question> findRandomQuestions(int count);
+
+    @Query(value =  "select correct_answer from question_table where id = ?",nativeQuery = true)
+    String findCorrectAnswerByID(int id);
 }
