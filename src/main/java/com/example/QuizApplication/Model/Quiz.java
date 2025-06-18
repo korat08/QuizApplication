@@ -1,6 +1,8 @@
 package com.example.QuizApplication.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
@@ -17,9 +19,11 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "user_id" ,nullable = false)
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<QuizQuestion> questionList;
 
     public Quiz() {

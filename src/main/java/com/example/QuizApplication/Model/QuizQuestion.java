@@ -1,6 +1,8 @@
 package com.example.QuizApplication.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.web.JsonPath;
 
@@ -13,11 +15,16 @@ public class QuizQuestion {
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
+    @JsonBackReference
     private Quiz quiz;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
+    @JsonBackReference
     private Question question;
+
+
+    private String userAnswer;
 
     public QuizQuestion() {
     }
@@ -60,5 +67,5 @@ public class QuizQuestion {
         this.userAnswer = userAnswer;
     }
 
-    private String userAnswer;
+
 }

@@ -33,62 +33,26 @@ public class QuizService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public ResponseEntity<QuizStartResponseDTO> startQuiz(String userName) {
+    public ResponseEntity<String> startQuiz(String userName) {
         User user = userRepository.findByUserName(userName);
-        QuizStartResponseDTO responseDTO = new QuizStartResponseDTO();
 
         if(user == null){
-            return ResponseEntity.badRequest().body(responseDTO);
+            return ResponseEntity.badRequest().body("User Not Found........");
         }
 
-        List<Question> randomQuestions = questionRepository.findRandomQuestions(5);
-        Quiz quiz = new Quiz(user,new ArrayList<>());
-
-        for(Question q:randomQuestions){
-            QuizQuestion qq = new QuizQuestion(quiz,q,null);
-            quiz.getQuestionList().add(qq);
-        }
-
+        Quiz quiz = new Quiz();
+        quiz.setUser(user);
         quizRepository.save(quiz);
 
-
-        responseDTO.setQuizId(quiz.getId());
-
-        List<QuestionDTO> questionDTOList = randomQuestions.stream().map(q -> {
-            QuestionDTO dto = new QuestionDTO(q.getId(),q.getQuestionText(),q.getOptionA(),q.getOptionB(),q.getOptionC(),q.getOptionD());
-            return dto;
-        }).collect(Collectors.toList());
-
-        responseDTO.setQuestions(questionDTOList);
-
-        return ResponseEntity.ok(responseDTO);
+        Integer quizId = quiz.getId();
+        return ResponseEntity.ok("Quiz Started Your Quiz id is => " + quizId);
     }
 
-    public ResponseEntity<String> submitQuiz(QuizSubmitDTO quizSubmitDTO) {
-        Optional<Quiz> optionalQuiz = quizRepository.findById(quizSubmitDTO.getQuizId());
 
-        if(optionalQuiz.isEmpty()){
-            return ResponseEntity.badRequest().body("Quiz not found.....");
-        }
 
-        Quiz quiz = optionalQuiz.get();
-        int score = 0;
-
-        for(AnswerDTO answerDTO : quizSubmitDTO.getAnswerDTOS()){
-            for(QuizQuestion qq : quiz.getQuestionList()){
-                if(qq.getQuestion().getId().equals(answerDTO.getQuestionId())){
-                    qq.setUserAnswer(answerDTO.getUserAnswer());
-
-                    if(qq.getQuestion().getCorrectAnswer().equalsIgnoreCase(answerDTO.getUserAnswer())){
-                        score++;
-                    }
-
-                    break;
-                }
-            }
-        }
-        quizRepository.save(quiz);
-        return ResponseEntity.ok("Your Scored "+ score+ " out of " + quizSubmitDTO.getAnswerDTOS().size());
+    public ResponseEntity<?> getQuizSet(Integer quizId) {
+        Quiz quiz = new Quiz();
+        quiz = quizRepository.findById(quizId).orElse(null);
+        return ResponseEntity.ok(quiz);
     }
-
 }

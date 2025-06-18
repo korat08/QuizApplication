@@ -16,12 +16,17 @@ public class QuizController {
     QuizService quizService;
 
     @PostMapping("quiz-start/{userName}")
-    public ResponseEntity<QuizStartResponseDTO> startQuiz(@PathVariable String userName){
+    public ResponseEntity<String> startQuiz(@PathVariable String userName){
         return quizService.startQuiz(userName);
     }
 
-        @PostMapping("submit")
-    public ResponseEntity<String> submitQuiz(@RequestBody QuizSubmitDTO quizSubmitDTO){
-        return quizService.submitQuiz(quizSubmitDTO);
+    @PostMapping("submit")
+//    public ResponseEntity<String> submitQuiz(@RequestBody QuizSubmitDTO quizSubmitDTO){
+//        return quizService.submitQuiz(quizSubmitDTO);
+//    }
+
+    @GetMapping("getQuiz/{quizId}")
+    public ResponseEntity<?> getQuizSet(@PathVariable Integer quizId){
+        return quizService.getQuizSet(quizId);
     }
 }
