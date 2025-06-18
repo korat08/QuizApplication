@@ -1,10 +1,9 @@
 package com.example.QuizApplication.Model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -17,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private String userName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,6 +46,5 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
 }

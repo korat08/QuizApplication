@@ -6,6 +6,7 @@ import com.example.QuizApplication.DTO.AnswerDTO;
 import com.example.QuizApplication.DTO.QuestionDTO;
 import com.example.QuizApplication.DTO.QuizResultDTO;
 import com.example.QuizApplication.Service.QuizService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class QuizController {
     }
 
     @PostMapping("{quizId}/submitAnswer")
-    public ResponseEntity<AnswerResponse> submitAnswer(@PathVariable Integer quizId , @RequestBody AnswerDTO answerDTO){
+    public ResponseEntity<AnswerResponse> submitAnswer(@PathVariable Integer quizId ,@Valid @RequestBody AnswerDTO answerDTO){
         return quizService.submitAnswer(quizId,answerDTO);
     }
 

@@ -1,8 +1,13 @@
 package com.example.QuizApplication.DTO;
 
+import jakarta.validation.constraints.NotNull;
+
 public class AnswerDTO {
 
+    @NotNull
     private Integer questionId;
+
+    @NotNull
     private String userAnswer;
 
     public Integer getQuestionId() {
